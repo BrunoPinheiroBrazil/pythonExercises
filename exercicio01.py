@@ -8,7 +8,7 @@ def funcaoSomaLetraA(palavra) :
   for letra in palavra:
     if letra == 'A':
       resposta+=1;
-  
+   
   return resposta;
 
 
