@@ -5,6 +5,10 @@ tempoTimer = 1;
 #Identificar o que esta errado na função somaLetraA e arrumar para que os testes passem:
 def funcaoSomaLetraA(palavra) :
   resposta = 0;
+  for letra in palavra:
+    if letra == 'A':
+      resposta+=1;
+  
   return resposta;
 
 
