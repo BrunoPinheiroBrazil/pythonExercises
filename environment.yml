@@ -1,0 +1,4 @@
+name: pythonTestEnv
+channels:
+  - conda-forge
+  - defaults
