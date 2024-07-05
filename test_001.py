@@ -43,26 +43,18 @@ def funcaoSomaLetraA(palavra) :
 
 
 ##Testes:
-res1 = funcaoSomaLetraA("ABABA");
-res2 = funcaoSomaLetraA("CDEFG");
-res3 = funcaoSomaLetraA("MAR");
-res4 = funcaoSomaLetraA("DIVULGAR");
+def test_answer01():
+  res1 = funcaoSomaLetraA("ABABA");
+  assert(res1) == 3, f'Esperava encontrar 3 e encontrou {res1}';
 
-print("Rodando testes");
-time.sleep(tempoTimer);
+def test_answer02():
+  res2 = funcaoSomaLetraA("CDEFG");
+  assert(res2) == 0, f'Esperava encontrar 0 e encontrou {res2}';
 
-assert(res1) == 3, f'Esperava encontrar 3 e encontrou {res1}';
-print(f"Teste 1 passou!");
-time.sleep(tempoTimer);
+def test_answer03():
+  res3 = funcaoSomaLetraA("MAR");
+  assert(res3) == 1, f'Esperava encontrar 1 e encontrou {res3}';
 
-assert(res2) == 0, f'Esperava encontrar 0 e encontrou {res2}';
-print(f"Teste 2 passou!");
-time.sleep(tempoTimer);
-
-assert(res3) == 1, f'Esperava encontrar 1 e encontrou {res3}';
-print(f"Teste 3 passou!");
-time.sleep(tempoTimer);
-
-assert(res4) == 1, f'Esperava encontrar 1 e encontrou {res4}';
-print(f"Teste 4 passou!");
-time.sleep(tempoTimer);
+def test_answer04():
+  res4 = funcaoSomaLetraA("DIVULGAR");
+  assert(res4) == 1, f'Esperava encontrar 1 e encontrou {res4}';
