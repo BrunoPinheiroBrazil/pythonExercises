@@ -1,7 +1,3 @@
-import time;
-
-tempoTimer = 1;
-
 #Identificar o que esta errado na função somaLetraA e arrumar para que os testes passem:
 def funcaoSomaLetraA(palavra) :
   resposta = 0;
@@ -9,7 +5,6 @@ def funcaoSomaLetraA(palavra) :
 
 
 
-#Para rodar os testes abra o Terminal abaixo e rode o comando python -m exercicio01 -cov
 
 
 
@@ -38,7 +33,7 @@ def funcaoSomaLetraA(palavra) :
 
 
 
-##Testes:
+##Tests:
 def test_answer01():
   res1 = funcaoSomaLetraA("ABABA");
   assert(res1) == 3, f'Esperava encontrar 3 e encontrou {res1}';
