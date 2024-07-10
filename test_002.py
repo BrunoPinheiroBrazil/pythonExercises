@@ -4,8 +4,12 @@
 #vai fazer a subração.
 
 def funcOperacaoMatematica(operacao, a, b):
-  resposta = a + b;
-  return 0;
+  resposta = operacao
+  for operacao in a, b :
+   soma += operacao
+   subitracao -= operacao
+  return resposta;
+
 
 
 
