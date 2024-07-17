@@ -4,10 +4,13 @@
 #vai fazer a subração.
 
 def funcOperacaoMatematica(operacao, a, b):
-  resposta = operacao
-  for operacao in a, b :
-   soma += operacao
-   subitracao -= operacao
+  resposta = 0;
+  if operacao == "SOMA":
+     resposta= a+b;
+  else:
+        resposta= a-b;
+    
+   
   return resposta;
 
 
