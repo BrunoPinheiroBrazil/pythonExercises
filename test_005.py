@@ -25,7 +25,7 @@ def Transacao_Compra(produto:str, usuario:str):
 
   #Faça o cálculo necessário do passo 6 usando as variáveis acima. 
 
-  return False;
+  return True;
 
 
 
@@ -98,4 +98,12 @@ def test_answer06():
 
 def test_answer07():
   res = Transacao_Compra("Sonic", "Carro");
+  assert(res) == False, f'Esperava encontrar False e encontrou {res}';
+
+def test_answer08():
+  res = Transacao_Compra("Vacilo", "Computador");
+  assert(res) == False, f'Esperava encontrar False e encontrou {res}';
+
+def test_answer09():
+  res = Transacao_Compra("Sonic", "Computador");
   assert(res) == False, f'Esperava encontrar False e encontrou {res}';
