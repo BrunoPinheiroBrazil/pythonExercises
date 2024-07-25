@@ -35,7 +35,6 @@ def funcaoSomaLetraA(palavra) :
 
 
 
-
 ##Tests:
 def test_answer01():
   res1 = funcaoSomaLetraA("ABABA");

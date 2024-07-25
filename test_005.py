@@ -9,42 +9,50 @@
 #5 - Caso o usuário tenha crédito suficiente, o sistema busca o valor do produto passado e guarda em uma variável.
 #6 - O sistema calcula se o usuário tem crédito suficiente para compra do produto, se tiver, retorna True, senão False.
 
+def pegaPendenciaUsuario(usuario:str):
+  return pendenciaUsuarios.get(usuario);
+
 #passo 1
-def Transacao_Compra(produto:str, usuario:str):
-  
+def Transacao_Compra(usuario:str, produto:str):
+  if usuario not in pendenciaUsuarios or usuario not in creditosUsuarios:
+    return False
+  if produto not in valoresProdutos:
+    return False
   #passo 2 e 3
   pendencia = pegaPendenciaUsuario(usuario);
   if(pendencia == "Pendencia"):
     return False;
-
-  #passo 4
-  creditoUsuario = pegaCreditoUsuario(usuario);
-
+  
+  #passo 
+  creditoUsuario = pegaCreditoUsuario(usuario)
+  
   #passo 5
-  valorDeProduto = pegaValorProduto(produto);
-
+  valorDeProduto = pegaValorProduto(produto)
+ 
+  #valorDeProduto = produto
   #Faça o cálculo necessário do passo 6 usando as variáveis acima. 
-
-  return True;
-
-
-
-
-
+  
+  if creditoUsuario >= valorDeProduto:
+    return True
+  else:
+    return False
 
 
 
 
 
 
-def pegaPendenciaUsuario(usuario:str):
-  return pendenciaUsuarios.get(usuario);
+
+
+
+
+
 
 def pegaValorProduto(produto:str):
-  return valoresProdutos.get(produto);
+  return valoresProdutos[produto];
 
 def pegaCreditoUsuario(usuario:str):
-  return creditosUsuarios.get(usuario);
+  return creditosUsuarios[usuario];
 
 #Tabela fake para persistir a pendencia dos usuarios
 pendenciaUsuarios = {
@@ -98,12 +106,12 @@ def test_answer06():
 
 def test_answer07():
   res = Transacao_Compra("Sonic", "Carro");
-  assert(res) == False, f'Esperava encontrar False e encontrou {res}';
+  assert(res) == False, f'Esperava encontrar False e encontrou {res}'
 
 def test_answer08():
-  res = Transacao_Compra("Vacilo", "Computador");
-  assert(res) == False, f'Esperava encontrar False e encontrou {res}';
+  res = Transacao_Compra("dudu", "Carro")
+  assert(res) == False, f'Esperava encontrar False e encontrou {res}'
 
 def test_answer09():
-  res = Transacao_Compra("Sonic", "Computador");
-  assert(res) == False, f'Esperava encontrar False e encontrou {res}';
+  res = Transacao_Compra("Sonic", "mercedez")
+  assert(res) == False, f'Esperava encontrar False e encontrou {res}'
