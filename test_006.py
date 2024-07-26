@@ -5,7 +5,11 @@ import pytest;
 #Caso seja PAR, retornar a palavra "PAR" do contrário retornar a palavra "IMPAR". 
 
 def validaPalavraParOuImpar(palavra:str):
-  return "IMPAR";
+ num_letras = len(palavra)
+ if num_letras % 2 == 0:
+    return "PAR"
+ else:
+    return "IMPAR";
 
 
 
