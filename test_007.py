@@ -66,6 +66,7 @@ def test_validaGames():
   cur.execute("INSERT INTO Games VALUES ('2006-01-05','Sonic',10,99.99)");
   cur.execute("INSERT INTO Games VALUES ('2001-02-05','Silent',5,199.99)");
   cur.execute("INSERT INTO Games VALUES ('1999-01-20','Metal Gear',1,399.99)");
+  cur.execute("INSERT INTO Games VALUES ('1997-12-24','Parasite',1,499.99)");
 
   # Salva as alterações
   conn.commit();
@@ -73,6 +74,8 @@ def test_validaGames():
   game1 = buscaGame("Sonic");
   game2 = buscaGame("Silent");
   game3 = buscaGame("Metal Gear");
+  game3 = buscaGame("Metal Gear");
+  game4 = buscaGame("Parasite");
 
   with pytest.raises(Exception) as info_da_exception:
     buscaGame("");
@@ -82,6 +85,7 @@ def test_validaGames():
   assert game1.valor == 99.99, f"Esperava encontrar 99.99 mas encontrou {game1.valor}"
   assert game2.valor == 199.99, f"Esperava encontrar 199.99 mas encontrou {game2.valor}"
   assert game3.valor == 399.99, f"Esperava encontrar 399.99 mas encontrou {game3.valor}"
+  assert game4.valor == 499.99, f"Esperava encontrar 499.99 mas encontrou {game4.valor}"
 
   #Encerra conexão quando termina os testes.
   conn.close();
