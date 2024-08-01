@@ -74,7 +74,6 @@ def test_validaGames():
   game1 = buscaGame("Sonic");
   game2 = buscaGame("Silent");
   game3 = buscaGame("Metal Gear");
-  game3 = buscaGame("Metal Gear");
   game4 = buscaGame("Parasite");
 
   with pytest.raises(Exception) as info_da_exception:
