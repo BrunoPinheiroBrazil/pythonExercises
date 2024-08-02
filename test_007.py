@@ -10,7 +10,10 @@ conn = sqlite3.connect(':memory:');
 #2° Na Exception lançada deve conter o texto "Nome faltando!"
 #3° A função deve passar a variável nomeGame para o método interno do banco buscaGameNoBanco.
 def buscaGame(nomeGame:str):
+  if not nomeGame:
+    raise Exception ('Nome faltando!');
   game = Jogo("","",0,0);
+  game= buscaGameNoBanco(nomeGame)
   return game;
 
 
@@ -40,10 +43,11 @@ def buscaGameNoBanco(titulo:str):
   #Cria um cursor para interagir com o banco
   cur = conn.cursor();
   cur.execute("SELECT * FROM Games WHERE Titulo = '%s'" % titulo);
-  
+
   #Preenche os dados do Game encontrado no banco
   row = cur.fetchone();
-
+  if row is None:
+    raise Exception('Jogo não encontrado')
   tituloEncontrado = row[1];
   quantidadeEncontrada = row[2];
   valorEncontrado = row[3];
