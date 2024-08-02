@@ -12,6 +12,9 @@ conn = sqlite3.connect(':memory:');
 #3° A função deve passar a variável nome para o método interno do banco buscaClienteNoBanco.
 def buscaCliente(nome:str):
   cliente = Cliente("","",0,"");
+  if not nome:
+    raise Exception("Nome Faltando")
+  cliente= buscaClienteNoBanco(nome)
   return cliente;
 
 
@@ -33,7 +36,13 @@ def buscaCliente(nome:str):
 #5ª A função BuscaClientes retorna uma lista de clientes, você deverá contar quantos clientes tem nesta lista de retorno e 
 #Passar este número no return. 
 def contaClientes(idade:int,genero:str):
-  return 0
+  if idade >0:
+    clientes=buscaClientes(idade, "")
+  elif genero:
+    clientes= buscaClientes(0, genero)
+  else:
+    raise Exception("adicione pelo menos um dos parametros")
+  return len(clientes)
 
 
 
