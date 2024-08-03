@@ -30,6 +30,7 @@ def buscaEOrdenaClientes():
 
   #esta funçao retorna todos os clientes do banco. (Uma lista de Objeto Cliente)
   listaDeClientes = buscaTodosClientes();
+  listaDeClientes.sort(key=lambda cliente: cliente.nome);
   return listaDeClientes;
 
 
