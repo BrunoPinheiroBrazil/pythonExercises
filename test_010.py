@@ -36,6 +36,7 @@ cur.execute("""INSERT INTO Produto VALUES
 
 # Salva as alterações
 conn.commit();
+cur.close();
 
 
 #Exercicio 1
@@ -54,6 +55,8 @@ def processaCompraCliente(cpf:str, produto:str):
   #3 - Aqui você valida se o cliente ficou com Valor >= 0 então operação continua, senão joga exception dizendo que 
   #O cliente não tem crédito para a compra. 
   #A mensagem da exception tem que conter o texto pelo menos'credito insuficiente, faltou {valorFaltante} reais!'
+  #Dica o valorFaltante deve ser limitado a duas casas decimais!! 
+  #Dica 2 o valorFaltante deve ser positivo! Não negativo! Pesquise a função abs. e como limitar valor numerico no python para 2 casas decimais.
   if(creditoCliente < 0):
     raise Exception("credito insuficiente, faltou %.2f reais!" % abs(creditoCliente));
 
@@ -117,6 +120,7 @@ def buscaDadosDeCreditoDoClienteNoBancoPorCPF(cpf:str):
   #Cria uma variável do tipo "Cliente"
   cliente = Cliente(nome, cpf, valor, bloqueio);
 
+  cur.close();
   #Retorna a variavel do tipo Cliente.
   return cliente;
 
@@ -135,6 +139,8 @@ def buscaDadosProduto(nomeProduto:str):
   #Cria uma variável do tipo "Produto"
   produto = Produto(nome, valor);
 
+  cur.close();
+
   #Retorna a variavel do tipo Produto.
   return produto;
 
@@ -142,6 +148,7 @@ def atualizaCredito(cpf:str, valorAtualizado:float):
   curUpdate = conn.cursor();
   commandSql = "UPDATE Credito SET Valor = '%f' WHERE CPF = '%s'" %(valorAtualizado ,cpf);
   curUpdate.execute(commandSql);
+  curUpdate.close();
   return;
 
 
