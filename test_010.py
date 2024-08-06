@@ -41,7 +41,7 @@ conn.commit();
 #Exercicio 1
 def processaCompraCliente(cpf:str, produto:str):
 
-  #esta funçao retorna todos os clientes do banco. (Uma lista de Objeto Cliente)
+  #esta funçao retorna os dados de credito do cliente. Para saber os dados, procure a Class Cliente
   dadosDeCreditoDoCliente = buscaDadosDeCreditoDoClienteNoBancoPorCPF(cpf);
   
   #1 - Aqui Você deverá pegar os dados do produto.
@@ -139,7 +139,8 @@ def buscaDadosProduto(nomeProduto:str):
 
 def atualizaCredito(cpf:str, valorAtualizado:float):
   curUpdate = conn.cursor();
-  curUpdate.execute("UPDATE Credito SET Valor = '%f' WHERE CPF = '%s'" %(valorAtualizado ,cpf));
+  commandSql = "UPDATE Credito SET Valor = '%f' WHERE CPF = '%s'" %(valorAtualizado ,cpf);
+  curUpdate.execute(commandSql);
   return;
 
 
@@ -163,5 +164,9 @@ def test_validaOperacoesCredito():
   
   assert 'credito insuficiente, faltou 9099.00 reais!' in info_da_exceptionFabian.value.args[0].lower(), f"A Exception tem que conter uma mensagem contendo 'credito insuficiente, faltou 9099.00 reais!'"
 
+  resultadoTransacao2 = processaCompraCliente("89810030088", "HB20");
+
+  assert resultadoTransacao2 == "Compra concluida. Cliente Pamela possui ainda 89000.00 de credito.", f"Esperava encontrar 'Compra concluida. Cliente Fabian possui ainda 89000.00 de credito.' mas encontrou {resultadoTransacao2}"
+  
   #Encerra conexão quando termina os testes.
   conn.close();
