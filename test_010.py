@@ -64,6 +64,7 @@ def processaCompraCliente(cpf:str, produto:str):
   atualizaCredito(dadosDeCreditoDoCliente.cpf, creditoCliente);
 
   #5 - Devera retornar o valor restante do crédito do cliente, numa mensagem assim: "Compra concluida. Cliente {nomeCliente} possui ainda {valorCreditoAtual} de credito."
+  #Dica, o valor de float deve ser limitado na resposta até 2 casas decimais!!! 
   return "Compra concluida. Cliente %s possui ainda %.2f de credito." %(dadosDeCreditoDoCliente.nome, creditoCliente);
 
 
