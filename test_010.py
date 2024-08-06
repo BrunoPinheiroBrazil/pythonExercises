@@ -46,29 +46,31 @@ def processaCompraCliente(cpf:str, produto:str):
   dadosDeCreditoDoCliente = buscaDadosDeCreditoDoClienteNoBancoPorCPF(cpf);
   
   #1 - Aqui Você deverá pegar os dados do produto.
-  dadosProduto = buscaDadosProduto(produto);
-  
+
+
   #2 - Aqui você vai subtrair o valor do produto do valor do credito do cliente. E jogar numa variavel. 
-  creditoCliente = dadosDeCreditoDoCliente.valor;
-  creditoCliente = creditoCliente - dadosProduto.valor;
-  
+
+
+
   #3 - Aqui você valida se o cliente ficou com Valor >= 0 então operação continua, senão joga exception dizendo que 
   #O cliente não tem crédito para a compra. 
   #A mensagem da exception tem que conter o texto pelo menos'credito insuficiente, faltou {valorFaltante} reais!'
   #Dica o valorFaltante deve ser limitado a duas casas decimais!! 
   #Dica 2 o valorFaltante deve ser positivo! Não negativo! Pesquise a função abs. e como limitar valor numerico no python para 2 casas decimais.
-  if(creditoCliente < 0):
-    raise Exception("credito insuficiente, faltou %.2f reais!" % abs(creditoCliente));
+  
+
+
 
   #4 - Aqui você deverá rodar a função do banco para atualizar os dados do crédito do cliente.
   #Nome da função é atualizaCredito(cpf, valorAtualizado)
   #O ValorAtualizado é o valor que você calculou do credito do cliente novo. 
 
-  atualizaCredito(dadosDeCreditoDoCliente.cpf, creditoCliente);
+
+
 
   #5 - Devera retornar o valor restante do crédito do cliente, numa mensagem assim: "Compra concluida. Cliente {nomeCliente} possui ainda {valorCreditoAtual} de credito."
   #Dica, o valor de float deve ser limitado na resposta até 2 casas decimais!!! 
-  return "Compra concluida. Cliente %s possui ainda %.2f de credito." %(dadosDeCreditoDoCliente.nome, creditoCliente);
+  return "Compra concluida";
 
 
 
