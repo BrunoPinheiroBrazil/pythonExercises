@@ -24,7 +24,7 @@ cur.execute("""INSERT INTO Credito VALUES
 cur.execute("""INSERT INTO Produto VALUES
             ('Computador',3500),
             ('Monitor',1400),
-            ('Polo',38000),
+            ('Polo',32000),
             ('HB20',61000),
             ('TV',4100),
             ('PS3',1200),
@@ -36,30 +36,39 @@ cur.execute("""INSERT INTO Produto VALUES
 
 # Salva as alterações
 conn.commit();
+cur.close();
 
 
 #Exercicio 1
 def processaCompraCliente(cpf:str, produto:str):
 
-  #esta funçao retorna todos os clientes do banco. (Uma lista de Objeto Cliente)
+  #esta funçao retorna os dados de credito do cliente. Para saber os dados, procure a Class Cliente
   dadosDeCreditoDoCliente = buscaDadosDeCreditoDoClienteNoBancoPorCPF(cpf);
   
   #1 - Aqui Você deverá pegar os dados do produto.
-
+  dadosProduto = buscaDadosProduto(produto);
   
   #2 - Aqui você vai subtrair o valor do produto do valor do credito do cliente. E jogar numa variavel. 
-
+  creditoCliente = dadosDeCreditoDoCliente.valor;
+  creditoCliente = creditoCliente - dadosProduto.valor;
   
   #3 - Aqui você valida se o cliente ficou com Valor >= 0 então operação continua, senão joga exception dizendo que 
   #O cliente não tem crédito para a compra. 
-
+  #A mensagem da exception tem que conter o texto pelo menos'credito insuficiente, faltou {valorFaltante} reais!'
+  #Dica o valorFaltante deve ser limitado a duas casas decimais!! 
+  #Dica 2 o valorFaltante deve ser positivo! Não negativo! Pesquise a função abs. e como limitar valor numerico no python para 2 casas decimais.
+  if(creditoCliente < 0):
+    raise Exception("credito insuficiente, faltou %.2f reais!" % abs(creditoCliente));
 
   #4 - Aqui você deverá rodar a função do banco para atualizar os dados do crédito do cliente.
   #Nome da função é atualizaCredito(cpf, valorAtualizado)
   #O ValorAtualizado é o valor que você calculou do credito do cliente novo. 
 
-  #5 - Devera retornar o valor restante do crédito do cliente, numa mensagem assim: "Compra concluida. Cliente {nomeCliente} possui ainda {valorCreditoAtual}."
-  return True;
+  atualizaCredito(dadosDeCreditoDoCliente.cpf, creditoCliente);
+
+  #5 - Devera retornar o valor restante do crédito do cliente, numa mensagem assim: "Compra concluida. Cliente {nomeCliente} possui ainda {valorCreditoAtual} de credito."
+  #Dica, o valor de float deve ser limitado na resposta até 2 casas decimais!!! 
+  return "Compra concluida. Cliente %s possui ainda %.2f de credito." %(dadosDeCreditoDoCliente.nome, creditoCliente);
 
 
 
@@ -80,7 +89,7 @@ def processaCompraCliente(cpf:str, produto:str):
 
 
 
-#Uma classe para o Objeto que precisamos.
+#Uma classe para o Objeto Cliente que precisamos.
 class Cliente:
   def __init__(self, nome:str, cpf:str, valor:float, bloqueio:bool):
     self.nome = nome;
@@ -88,8 +97,9 @@ class Cliente:
     self.valor = valor;
     self.bloqueio = bloqueio;
 
+#Outra classe para o Objeto Produto que precisamos
 class Produto:
-  def __init__(self, nome:str, valor:str):
+  def __init__(self, nome:str, valor:float):
     self.nome = nome;
     self.valor = valor;
 
@@ -110,30 +120,35 @@ def buscaDadosDeCreditoDoClienteNoBancoPorCPF(cpf:str):
   #Cria uma variável do tipo "Cliente"
   cliente = Cliente(nome, cpf, valor, bloqueio);
 
-  #Retorna a variavel do tipo JOGO.
+  cur.close();
+  #Retorna a variavel do tipo Cliente.
   return cliente;
 
 
 def buscaDadosProduto(nomeProduto:str):
 #Cria um cursor para interagir com o banco
   cur = conn.cursor();
-  cur.execute("SELECT * FROM Produto WHERE Nome = '%s'" % nomeProduto);
+  cur.execute("SELECT * FROM Produto WHERE Nome = '%s'" %nomeProduto);
   
-  #Preenche os dados do Cliente encontrado no banco
+  #Preenche os dados do Produto encontrado no banco
   row = cur.fetchone();
 
   nome = row[0];
   valor = row[1];
 
-  #Cria uma variável do tipo "Cliente"
+  #Cria uma variável do tipo "Produto"
   produto = Produto(nome, valor);
 
-  #Retorna a variavel do tipo JOGO.
+  cur.close();
+
+  #Retorna a variavel do tipo Produto.
   return produto;
 
 def atualizaCredito(cpf:str, valorAtualizado:float):
   curUpdate = conn.cursor();
-  curUpdate.execute("UPDATE Credito SET Valor = '%f' WHERE CPF = '%s'" % valorAtualizado, cpf);
+  commandSql = "UPDATE Credito SET Valor = '%f' WHERE CPF = '%s'" %(valorAtualizado ,cpf);
+  curUpdate.execute(commandSql);
+  curUpdate.close();
   return;
 
 
@@ -142,7 +157,24 @@ def test_validaOperacoesCredito():
   ##Fazendo os testes da primeira questão: 
   resultadoTransacao = processaCompraCliente("00888820027", "Computador");
 
-  assert resultadoTransacao == True, f"Esperava encontrar True mas encontrou {resultadoTransacao}"
+  assert resultadoTransacao == "Compra concluida. Cliente Fabian possui ainda 31500.00 de credito.", f"Esperava encontrar 'Compra concluida. Cliente Fabian possui ainda 31500.00 de credito.' mas encontrou {resultadoTransacao}"
 
+  resultadoTransacao = processaCompraCliente("00888820027", "PS5");
+
+  assert resultadoTransacao == "Compra concluida. Cliente Fabian possui ainda 27501.00 de credito.", f"Esperava encontrar 'Compra concluida. Cliente Fabian possui ainda 27501.00 de credito.' mas encontrou {resultadoTransacao}"
+
+  resultadoTransacao = processaCompraCliente("00888820027", "Cama");
+
+  assert resultadoTransacao == "Compra concluida. Cliente Fabian possui ainda 22901.00 de credito.", f"Esperava encontrar 'Compra concluida. Cliente Fabian possui ainda 22901.00 de credito.' mas encontrou {resultadoTransacao}"
+
+  with pytest.raises(Exception) as info_da_exceptionFabian:
+    processaCompraCliente("00888820027", "Polo");
+  
+  assert 'credito insuficiente, faltou 9099.00 reais!' in info_da_exceptionFabian.value.args[0].lower(), f"A Exception tem que conter uma mensagem contendo 'credito insuficiente, faltou 9099.00 reais!'"
+
+  resultadoTransacao2 = processaCompraCliente("89810030088", "HB20");
+
+  assert resultadoTransacao2 == "Compra concluida. Cliente Pamela possui ainda 89000.00 de credito.", f"Esperava encontrar 'Compra concluida. Cliente Fabian possui ainda 89000.00 de credito.' mas encontrou {resultadoTransacao2}"
+  
   #Encerra conexão quando termina os testes.
   conn.close();
