@@ -62,7 +62,7 @@ def processaCompraCliente(cpf:str, produto:str):
   #Dica 2 o valorFaltante deve ser positivo! Não negativo! Pesquise a função abs. e como limitar valor numerico no python para 2 casas decimais.
   if valorRestante<0:
     valorFaltando=round(abs(valorRestante), 2)
-    raise Exception(f"cretido insuficiente, faltou{valorFaltando:.2f} reais!")
+    raise Exception(f"credito insuficiente, faltou {valorFaltando:.2f} reais!")
 
 
 
@@ -75,7 +75,7 @@ def processaCompraCliente(cpf:str, produto:str):
 
   #5 - Devera retornar o valor restante do crédito do cliente, numa mensagem assim: "Compra concluida. Cliente {dadosCreditoCliente.nome} possui ainda {valorCreditoAtual} de credito."
   #Dica, o valor de float deve ser limitado na resposta até 2 casas decimais!!! 
-  return "Compra concluida";
+  return f"Compra concluida. Cliente {dadosDeCreditoDoCliente.nome} possui ainda {valorRestante:.2f} de credito.";
 
 
 
