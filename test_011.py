@@ -35,8 +35,10 @@ def insereUsuario(usuario:Usuario):
   #1º Deverá validar se o apelido é maior que 15 caracteres. Caso seja maior deverá lançar exception.
   #   A mensagem de erro deverá conter -> 'apelido ultrapassou o limite de tamanho!'
 
+
   #2º A Idade não pode ser maior que 99 anos. Caso a idade seja maior que 99 anos, deverá lançar exception.
   #  A mensagem de erro deverá conter -> "idade não pode ser maior que 99 anos"
+  
 
   #3º O nome não pode conter números ou caracteres especiais, tais como @$%¨& e assim por diante. Só letras e espaço. 
 
