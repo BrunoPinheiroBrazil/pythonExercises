@@ -34,27 +34,30 @@ def insereUsuario(usuario:Usuario):
 
   #1º Deverá validar se o apelido é maior que 15 caracteres. Caso seja maior deverá lançar exception.
   #   A mensagem de erro deverá conter -> 'apelido ultrapassou o limite de tamanho!'
-
+ if len(usuario.apelido)>15:
+  raise Exception('apelido ultrapassou o limite de tamanho!')
 
   #2º A Idade não pode ser maior que 99 anos. Caso a idade seja maior que 99 anos, deverá lançar exception.
   #  A mensagem de erro deverá conter -> "idade não pode ser maior que 99 anos"
-  
+ if usuario.idade>99:
+  raise Exception('idade não pode ser maior que 99 anos')
 
   #3º O nome não pode conter números ou caracteres especiais, tais como @$%¨& e assim por diante. Só letras e espaço. 
 
 
+
   #4° Com tudo validado acima, a função deverá chamar a função de banco que vai criar o usuário no banco! 
   #   Esta função que cria o usuário no banco, retorna o "ID" do funcionário criado. Guarde este ID em uma variável. 
+ id_inserido=insereUsuarioNoBanco(usuario)
 
-
-  #5° Deverá preencher classe 'Resposta' definida acima para o return. 
+  #5° Deverá preencher classe 'Resposta' definida acima para o return.  
   #   Crie uma variável do tipo Resposta.
   #   A classe resposta tem os campos nomeUsuarioInserido e id. 
   #   nomeUsuarioInserido será o nome do usuário.
   #   id será o ID retornado na função do banco. 
   #   Preencha estes dois campos da variável resposta e retorne ela. 
-
-  return Resposta("Nada", 0);
+ resposta= Resposta (nomeUsuarioInserido=usuario.nome, id=id_inserido)
+ return resposta
 
 
 
