@@ -22,16 +22,23 @@ conn = sqlite3.connect(':memory:');
 
 #1° Cria a tabela de carros com os campos 'id chave automatica, marca texto, modelo texto, cavalos inteiro' usando a variável 
 #da conexão conn e um cursor igual os outros exercícios.
-
+cur= conn.cursor()
+cur.execute('''CREATE TABLE Carros (
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
+               marca TEXT NOT NULL,
+               modelo TEXT NOT NULL, 
+               cavalos INTEGER NOT NULL
+            )''')
 
 
 #2° Salva as alterações com commit. 
+conn.commit()
 
 
 
 #3° feche o cursor
 
-
+cur.close()
 
 #============================================================TESTES=====================================================================================
 #Comando de inserção no banco que deverá passar e retornar o ID automatico. 
