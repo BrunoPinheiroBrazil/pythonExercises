@@ -37,9 +37,12 @@ cur.close()
 def insereLivroNoBanco(livro:Livro):
   curUpdate = conn.cursor();  
   
-  #Dica 1: Monte o comando SQL para inserir nesta variável igual outros exercícios estão fazendo.
-  commandSql = "";
   
+  #Dica 1: Monte o comando SQL para inserir nesta variável igual outros exercícios estão fazendo.
+  commandSql =f"""
+      INSERT INTO Livraria (autor, titulo, valor)
+      VALUES ('{livro.autor}', '{livro.titulo}', '{livro.valor}')
+  """;
   curUpdate.execute(commandSql);
   
   id = curUpdate.lastrowid;
