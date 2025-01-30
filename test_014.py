@@ -59,7 +59,7 @@ def atualizaProprietario(id:int, novoProprietario:str):
   
   curUpdate = conn.cursor();
   
-  commandSql = "";
+  commandSql = f"UPDATE Apartamentos SET proprietario = '{novoProprietario}' WHERE id = {id} ";
 
   curUpdate.execute(commandSql);
 
