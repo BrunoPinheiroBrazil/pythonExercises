@@ -61,6 +61,15 @@ insereProduto(Produto("OMO", "Sabão em pó", 5, 14.90));
 #Complete a função que deve buscar a quantidade atual de produtos, subtrair a quantidadeAReduzir passada por parametro
 #e atualizar a tabela produtos com a nova quantidade. 
 def subtraiQuantidadeProduto(id:int, quantidadeAReduzir:int):
+  cur = conn.cursor()
+  cur. execute(f"SELECT quantidade FROM Produtos WHERE id = {id}")
+  QuantidadeAtual= cur.fetchone()[0]
+  NovaQuantidade= QuantidadeAtual-quantidadeAReduzir
+  cur.execute(f"UPDATE Produtos SET quantidade= {NovaQuantidade} WHERE id= {id}")
+  conn.commit()
+  cur.close()
+
+
   
 
   return;
@@ -69,6 +78,10 @@ def subtraiQuantidadeProduto(id:int, quantidadeAReduzir:int):
 #Complete a função para que a mesma ao receber o ID do produto e o novo valor, atualize a tabela Produtos com o novo valor
 #Deste produto usando o ID fornecido nos parâmetros.
 def atualizaPrecoProduto(id:int, novoValor:float):
+  cur= conn.cursor()
+  cur.execute(f"UPDATE Produtos SET valor= {novoValor} WHERE id= {id }")
+  conn.commit()
+  cur.close()
   
   return;
 
