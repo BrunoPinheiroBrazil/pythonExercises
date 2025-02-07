@@ -1,5 +1,4 @@
-import sqlite3
-import pytest
+import sqlite3;
 
 #Uma classe para o Objeto Usuario que precisamos.
 class Produto:
@@ -52,8 +51,8 @@ def insereProduto(produto:Produto):
 
 insereProduto(Produto("Cafe", "Po de cafe 1kg ", "Alimento", 8.90));
 insereProduto(Produto("Tang Laranja", "Suco de Laranja em pó marca Tang", "Alimento", 0.89));
-insereProduto(Produto("Dell Inspiron", "Notebook da Dell", "Eletronicos", 6999.90));
-insereProduto(Produto("Controle XBOX", "Joystick do XBOX 360", "Eletronicos", 199.90));
+insereProduto(Produto("Dell Inspiron", "Notebook da Dell", "Eletronico", 6999.90));
+insereProduto(Produto("Controle XBOX", "Joystick do XBOX 360", "Eletronico", 199.90));
 insereProduto(Produto("Agua", "garrafa com 2 litros de agua", "Alimento", 7.90));
 insereProduto(Produto("Cha", "Pacotinho de Cha", "Alimento", 2.90));
 insereProduto(Produto("Vassoura", "Vassoura para limpeza", "Limpeza", 29.90));
@@ -62,7 +61,7 @@ insereProduto(Produto("Esponja", "Esponja para lavar louca", "Limpeza", 3.90));
 #==================================================== Exercicio 1 ================================================================================
 #Complete a função que deve buscar o produto e retornar um objeto do tipo Produto
 def encontraProdutoPorID(id:int) -> Produto:
-
+  
   return Produto("","","",0);
 
 #==================================================== Exercicio 2 ================================================================================
@@ -71,9 +70,9 @@ def encontraProdutoPorID(id:int) -> Produto:
 # E a mesma função deve preencher uma lista com os produtos encontrados e retornar a lista com os itens encontrados. 
 # Como você pode observar está faltando bastante coisa nesta função, analise e complete a mesma para que ela passe nos testes.
 def listarProdutosPorTipo(tipo:str) -> list[Produto]:
-  produto = Produto("","","",0);
-  produtos = [produto];
-  
+
+  produtos = [Produto("","","",0)];
+  #Retorna uma lista de objetos do tipo Cliente.
   return produtos;
 
 #==================================================== Exercicio 3 ================================================================================
@@ -82,7 +81,7 @@ def listarProdutosPorTipo(tipo:str) -> list[Produto]:
 #Observe que a função tá vazia, tente completar ela corretamente para que a mesma funcione e os testes passem.
 #Use exercicios anteriores como referência para acessar o banco, buscar os itens em lista, e somar cada um encontrado nesta lista
 def somaValoresPorTipo(tipo:str) -> float:
-
+  
   return 0.0;
 
 
@@ -104,15 +103,15 @@ def test_validaEncontraProdutoPorID():
 
 def test_validaListaProdutosPorTipo():
 
-  alimentos = listarProdutosPorTipo("Alimentos");
-  eletronicos = listarProdutosPorTipo("Eletronicos");
+  alimentos = listarProdutosPorTipo("Alimento");
+  eletronicos = listarProdutosPorTipo("Eletronico");
   limpeza = listarProdutosPorTipo("Limpeza");
 
   for a in alimentos:
-    assert a.tipo == "Alimentos", f"Erro no teste da litagem de alimentos.. todos itens tem que ser do tipo alimentos";
+    assert a.tipo == "Alimento", f"Erro no teste da litagem de Alimentos.. todos itens tem que ser do tipo Alimento";
   
   for e in eletronicos: 
-    assert e.tipo == "Eletronicos", f"Erro no teste de listagem de eletronicos.. todos os itens tem que ser do tipo Eletronicos";
+    assert e.tipo == "Eletronico", f"Erro no teste de listagem de Eletronicos.. todos os itens tem que ser do tipo Eletronico";
   
   for l in limpeza:
     assert l.tipo == "Limpeza", f"Erro no teste de listagem de Limpeza.. todos os itens tem que ser do tipo Limpeza";
@@ -121,13 +120,13 @@ def test_validaListaProdutosPorTipo():
 
 def test_somaValoresPorTipo():
 
-  totalAlimentos = somaValoresPorTipo("Alimentos");
-  totalEletronicos = somaValoresPorTipo("Eletronicos");
+  totalAlimentos = somaValoresPorTipo("Alimento");
+  totalEletronicos = somaValoresPorTipo("Eletronico");
   totalLimpeza = somaValoresPorTipo("Limpeza");
 
-  assert totalAlimentos == 20.59, f"Esperava encontrar o valor total de Alimentos de '20.59' porém encontrou {totalAlimentos}";
-  assert totalEletronicos == 7199.80, f"Esperava encontrar o valor total de Eletronicos de '7199.80' porém encontrou {totalEletronicos}";
-  assert totalLimpeza == 33.80, f"Esperava encontrar o valor total de Limpeza de '33.80' porém encontrou {totalLimpeza}";
+  assert totalAlimentos >= 20.58 and totalAlimentos <= 20.60, f"Esperava encontrar o valor total de Alimentos de '20.59' porém encontrou {totalAlimentos}";
+  assert totalEletronicos >= 7199.70 and totalEletronicos <= 7199.90, f"Esperava encontrar o valor total de Eletronicos de '7199.80' porém encontrou {totalEletronicos}";
+  assert totalLimpeza >= 33.70 and totalLimpeza <= 33.90, f"Esperava encontrar o valor total de Limpeza de '33.80' porém encontrou {totalLimpeza}";
 
   return;
 
