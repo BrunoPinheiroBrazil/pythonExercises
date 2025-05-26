@@ -61,8 +61,13 @@ insereProduto(Produto("Esponja", "Esponja para lavar louca", "Limpeza", 3.90));
 #==================================================== Exercicio 1 ================================================================================
 #Complete a função que deve buscar o produto e retornar um objeto do tipo Produto
 def encontraProdutoPorID(id:int) -> Produto:
-  
-  return Produto("","","",0);
+  cursor = conn.cursor()
+  cursor.execute(f"SELECT  nome, descricao, tipo, valor FROM Produtos WHERE id = {id}") 
+  result= cursor.fetchone()
+  cursor.close()
+  if result:
+    nome,descricao,tipo,valor=result
+  return Produto(nome,descricao,tipo,valor)
 
 #==================================================== Exercicio 2 ================================================================================
 #Esta função vai ser uma função de pesquisa de produtos por Tipo!!
@@ -70,10 +75,16 @@ def encontraProdutoPorID(id:int) -> Produto:
 # E a mesma função deve preencher uma lista com os produtos encontrados e retornar a lista com os itens encontrados. 
 # Como você pode observar está faltando bastante coisa nesta função, analise e complete a mesma para que ela passe nos testes.
 def listarProdutosPorTipo(tipo:str) -> list[Produto]:
-
-  produtos = [Produto("","","",0)];
+  cursor = conn.cursor()
+  cursor.execute(f"SELECT  nome, descricao, tipo, valor FROM Produtos WHERE tipo = '{tipo}'")
+  results=cursor.fetchall()
+  cursor.close()
+  produtos=[]
+  for result in results:
+    nome , descricao , tipo_produto , valor =result
+    produtos.append(Produto(nome , descricao , tipo_produto , valor ))
   #Retorna uma lista de objetos do tipo Cliente.
-  return produtos;
+  return produtos; 
 
 #==================================================== Exercicio 3 ================================================================================
 #Esta função aqui vai fazer a soma dos valores de todos produtos por tipo. 
@@ -81,9 +92,16 @@ def listarProdutosPorTipo(tipo:str) -> list[Produto]:
 #Observe que a função tá vazia, tente completar ela corretamente para que a mesma funcione e os testes passem.
 #Use exercicios anteriores como referência para acessar o banco, buscar os itens em lista, e somar cada um encontrado nesta lista
 def somaValoresPorTipo(tipo:str) -> float:
-  
-  return 0.0;
-
+  cursor= conn.cursor()
+  cursor.execute(f"SELECT valor FROM Produtos WHERE tipo = '{tipo}'")
+  results= cursor.fetchall()
+  total= 0.0
+  ##Soma os valores dos produtos encontrados
+  for result in results:
+    valor = result[0]
+    total += valor
+  cursor.close()
+  return total
 
 #============================================================TESTES=====================================================================================
 
