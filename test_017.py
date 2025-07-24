@@ -13,7 +13,20 @@ conn = sqlite3.connect(':memory:');
 
 #Crie o comando que executa a criação da tabela necessária.
 # Analise os códigos e ache oque precisa de nome, campo e etc para criação da tabela.
+cursor = conn.cursor();
+cursor.execute('''
+                  CREATE TABLE Itens (
+                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      nome TEXT NOT NULL,
+                      descricao TEXT NOT NULL,
+                      tipo TEXT NOT NULL,
+                      valor DECIMAL(10, 2) NOT NULL
+               
+                  )''');
 
+conn.commit();
+
+cursor.close();
 
 def insereItem(item:Item):
   curInsert = conn.cursor();  
